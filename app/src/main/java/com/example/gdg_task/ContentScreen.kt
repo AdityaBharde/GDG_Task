@@ -10,33 +10,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import coil.compose.AsyncImage
-import com.example.gdg_task.ui.theme.GDG_TaskTheme
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.FirebaseFirestore
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.delay
 
 @Composable
@@ -45,6 +39,7 @@ fun ContentScreen(repository: FirestoreContentRepository?, modifier: Modifier = 
         EmptyState(modifier)
         return
     }
+
     val items by repository.listenToContent().collectAsState(initial = emptyList())
 
     if (items.isEmpty()) {
@@ -60,7 +55,6 @@ fun ContentScreen(repository: FirestoreContentRepository?, modifier: Modifier = 
     }
 
     val pagerState = rememberPagerState(pageCount = { items.size })
-
     var fullScreenImageUrl by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(items.size, fullScreenImageUrl) {
@@ -76,8 +70,11 @@ fun ContentScreen(repository: FirestoreContentRepository?, modifier: Modifier = 
 
     HorizontalPager(
         state = pagerState,
-        modifier = modifier.fillMaxSize().padding(horizontal = 16.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
         pageSpacing = 16.dp,
+        verticalAlignment = Alignment.Top
     ) { page ->
         ContentCard(items[page], onImageClick = { url ->
             if (url.isNotBlank()) fullScreenImageUrl = url
@@ -117,7 +114,9 @@ fun ContentCard(item: ContentItem, onImageClick: (String) -> Unit) {
                     .fillMaxWidth()
                     .height(200.dp)
                     .clickable { onImageClick(item.imageUrl) },
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+                error = painterResource(id = R.drawable.ic_launcher_foreground)
             )
             Spacer(modifier = Modifier.height(8.dp))
         }
@@ -146,3 +145,7 @@ fun EmptyState(modifier: Modifier = Modifier) {
         )
     }
 }
+
+
+
+

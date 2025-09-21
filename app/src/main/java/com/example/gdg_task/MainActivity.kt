@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             GDG_TaskTheme {
                 Scaffold(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().padding(),
                     topBar = {
                         TopAppBar(
                             actions = {},

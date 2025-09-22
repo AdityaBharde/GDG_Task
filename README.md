@@ -50,5 +50,8 @@ This app successfully implements all the requirements outlined in the task descr
     - Open the project in Android Studio.
     - Let Gradle sync the dependencies.
     - Build and run the app on an emulator or a physical device.
+  
+      
 OR
-   To run the app, download the GDG.apk file and install it on your device.
+
+To run the app, download the GDG.apk file and install it on your device.

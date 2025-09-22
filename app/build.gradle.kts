@@ -57,6 +57,9 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore.ktx)
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
+
 
     // Coil for image loading in Compose
     implementation(libs.coil.compose)

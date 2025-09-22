@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.callbackFlow
 
 data class ContentItem(
     val text: String = "",
-    val imageUrl: String = ""
+    val imageUrl: String = "",
+    val actionUrl: String? = null
 )
 
 class FirestoreContentRepository(private val db: FirebaseFirestore) {
